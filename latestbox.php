@@ -6,8 +6,7 @@
     Author: ivdimova
     Version: 1.0 
     Author URI: http://it.ivdimova.com
-    */  
-    
+    */     
 class LBoxWidget extends WP_Widget {
     function LBoxWidget() {
         parent::WP_Widget(false, $name = 'Latest Posts Box');
@@ -24,13 +23,11 @@ class LBoxWidget extends WP_Widget {
     extract( $args );
     $title = apply_filters('widget_title', $instance['title']);
     $num_posts = $instance['num_posts'];
-   echo $before_widget; 
+    echo $before_widget; 
           if ( $title )
-            echo $before_title . $title . $after_title; ?>
- 
-        <div class="lbox" style="width=200px; height=100px; border: 1px solid black;">
-           
-        <?php global $post;
+            echo $before_title . $title . $after_title;
+      
+       global $post;
         $args = array( 'numberposts' => $num_posts);
         $lposts = get_posts( $args );
         foreach( $lposts as $post ) : setup_postdata($post); ?>
@@ -38,28 +35,16 @@ class LBoxWidget extends WP_Widget {
        
        <li><a href="<?php the_permalink(); ?>"><?php the_post_thumbnail(array(40,40)); ?></a></li>
         <?php endforeach; ?>
+    <?php echo $after_widget; 
 
- </div>
-         <?php echo $after_widget; 
-
-    }
-     }
-    
-    add_action('widgets_init', create_function('', 'return register_widget("LBoxWidget");')); 
-    
-    
-    function lbox_shtc ($args, $instance) {?>
-       
-           
-        <?php global $post;
+  }
+}
+add_action('widgets_init', create_function('', 'return register_widget("LBoxWidget");')); ?><?php function lbox_shtc ($args, $instance) {
+global $post;
         $lposts = get_posts( $args );
         foreach( $lposts as $post ) : setup_postdata($post); ?>
-       
-       
        <a href="<?php the_permalink(); ?>"><?php the_post_thumbnail(array(40,40)); ?></a>
         <?php endforeach; 
-
-
   }
    add_shortcode ('lbox','lbox_shtc');
 ?>
